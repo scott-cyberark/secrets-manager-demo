@@ -1,0 +1,41 @@
+name: Fetch and Display Idira Secret
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# CRITICAL: id-token: write is required for GitHub to issue the JWT.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  fetch-and-display:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch Secret from Idira Secrets Manager
+        uses: cyberark/conjur-action@v2
+        with:
+          url: ${{ secrets.IDIRA_URL }}
+          account: ${{ secrets.IDIRA_ACCOUNT }}
+          authn_id: github
+          jwt_audience: idira-conjur
+          # Syntax is "Safe_Name/Secret_Name|Local_Environment_Variable"
+          secrets: |
+            data/vault/SM-AWS-SecretHub/aws-dummy-account/password|MY_MAPPED_SECRET
+
+      - name: Display the Secret
+        run: |
+          echo "Secret successfully pulled from Idira Secrets Manager SaaS!"
+          
+          # GitHub Actions automatically masks secrets in the logs. 
+          # Printing this will output "***" instead of the actual plaintext.
+          echo "The vaulted credential is: $MY_MAPPED_SECRET"
+          
+          # To prove it pulled the correct value without exposing it, print its length:
+          echo "Credential length is: ${#MY_MAPPED_SECRET} characters."
