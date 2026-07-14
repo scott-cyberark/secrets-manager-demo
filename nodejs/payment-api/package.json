@@ -1,0 +1,14 @@
+{
+  "name": "payment-api-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Idira Secrets Manager demo - Node.js app fetching a third-party API key",
+  "main": "vault-app.js",
+  "scripts": {
+    "start:hardcoded": "node hardcoded-app.js",
+    "start:vault": "node vault-app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
