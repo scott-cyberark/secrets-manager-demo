@@ -33,6 +33,6 @@ export IDIRA_API_KEY="<api key for the above login>"
 `SECRET_PATH_*` in the script if your policy uses different paths):
 
 ```
-data/vault/SM-AWS-SecretHub/cloud-app/aws_access_key_id
-data/vault/SM-AWS-SecretHub/cloud-app/aws_secret_access_key
+data/demo-apps/cloud-app/aws_access_key_id
+data/demo-apps/cloud-app/aws_secret_access_key
 ```

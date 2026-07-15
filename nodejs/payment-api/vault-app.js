@@ -6,8 +6,10 @@
 
 const { IdiraClient } = require("./idira-client");
 
-// "Safe/Secret" path convention, same as used in .github/workflows/secrets.yml
-const SECRET_PATH_API_KEY = "data/vault/SM-API-SecretHub/payment-api/api_key";
+// Conjur-native demo branch. (data/vault/... is reserved for the Vault
+// Synchronizer, which mirrors real Privilege Cloud safes - see the
+// .github/workflows/secrets.yml sample for that convention.)
+const SECRET_PATH_API_KEY = "data/demo-apps/payment-api/api_key";
 
 async function chargeCustomer(amountCents, customerId) {
   const client = new IdiraClient();

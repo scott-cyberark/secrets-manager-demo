@@ -52,6 +52,6 @@ python vault_app.py
 (adjust `SECRET_PATH_*` in the script if your policy uses different paths):
 
 ```
-data/vault/SM-DB-SecretHub/app-db/username
-data/vault/SM-DB-SecretHub/app-db/password
+data/demo-apps/app-db/username
+data/demo-apps/app-db/password
 ```

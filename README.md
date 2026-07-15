@@ -17,11 +17,15 @@ Each sample ships two versions:
 | [summon/notification-service](summon/notification-service) | Bash (app is vault-agnostic) | Third-party API key | API key (`authn`), via `summon-conjur` | Summon process wrapper - zero app code changes |
 
 The `python`, `nodejs`, and `bash` samples each modify the app itself to call
-out to the vault (either via an SDK or its REST API), using the same
-"Safe/Secret" path convention as the GitHub Actions workflow
-(`data/vault/<Safe>/<secret>`). Each app's own README documents the exact
-paths it expects and the environment variables it needs
+out to the vault (either via an SDK or its REST API), reading Conjur-native
+secrets under `data/demo-apps/<app>/<secret>`. Each app's own README
+documents the exact paths it expects and the environment variables it needs
 (`IDIRA_URL`, `IDIRA_ACCOUNT`, `IDIRA_LOGIN`, `IDIRA_API_KEY`).
+
+Only the GitHub Actions workflow uses the `data/vault/<Safe>/<secret>` path
+convention - that branch is reserved for the Vault Synchronizer, which
+mirrors real Privilege Cloud safes into Secrets Manager (one-way,
+Privilege Cloud -> Conjur). Don't create secrets there by hand.
 
 The `summon` sample is different on purpose: the app (`notify.sh`) never
 references the vault at all. [Summon](https://github.com/cyberark/summon)

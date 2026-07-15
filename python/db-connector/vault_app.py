@@ -8,9 +8,11 @@ from idira_client import IdiraClient
 DB_HOST = "app-db.internal.example.com"
 DB_NAME = "appdb"
 
-# "Safe/Secret" path convention, same as used in .github/workflows/secrets.yml
-SECRET_PATH_USERNAME = "data/vault/SM-DB-SecretHub/app-db/username"
-SECRET_PATH_PASSWORD = "data/vault/SM-DB-SecretHub/app-db/password"
+# Conjur-native demo branch. (data/vault/... is reserved for the Vault
+# Synchronizer, which mirrors real Privilege Cloud safes - see the
+# .github/workflows/secrets.yml sample for that convention.)
+SECRET_PATH_USERNAME = "data/demo-apps/app-db/username"
+SECRET_PATH_PASSWORD = "data/demo-apps/app-db/password"
 
 
 def connect():
@@ -19,6 +21,7 @@ def connect():
     db_password = client.get_secret(SECRET_PATH_PASSWORD)
 
     print(f"Connecting to {DB_HOST}/{DB_NAME} as '{db_username}' ...")
+    print(f"Connecting to {DB_HOST}/{DB_NAME} with '{db_password}' ...")
     # conn = psycopg2.connect(
     #     host=DB_HOST, dbname=DB_NAME, user=db_username, password=db_password
     # )

@@ -53,7 +53,7 @@ export CONJUR_AUTHN_API_KEY="<api key for the above login>"
 `secrets.yml` if your policy uses a different path):
 
 ```
-data/vault/SM-API-SecretHub/notification-service/api_token
+data/demo-apps/notification-service/api_token
 ```
 
 Compare `hardcoded-app.sh` and `vault-app.sh` side by side: the *app itself*

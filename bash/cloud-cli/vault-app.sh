@@ -8,9 +8,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/idira-client.sh"
 
-# "Safe/Secret" path convention, same as used in .github/workflows/secrets.yml
-SECRET_PATH_ACCESS_KEY="data/vault/SM-AWS-SecretHub/cloud-app/aws_access_key_id"
-SECRET_PATH_SECRET_KEY="data/vault/SM-AWS-SecretHub/cloud-app/aws_secret_access_key"
+# Conjur-native demo branch. (data/vault/... is reserved for the Vault
+# Synchronizer, which mirrors real Privilege Cloud safes - see the
+# .github/workflows/secrets.yml sample for that convention.)
+SECRET_PATH_ACCESS_KEY="data/demo-apps/cloud-app/aws_access_key_id"
+SECRET_PATH_SECRET_KEY="data/demo-apps/cloud-app/aws_secret_access_key"
 
 TOKEN="$(idira_authenticate)"
 

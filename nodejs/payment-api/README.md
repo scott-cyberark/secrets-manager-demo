@@ -32,5 +32,5 @@ npm run start:vault
 `SECRET_PATH_API_KEY` in the script if your policy uses a different path):
 
 ```
-data/vault/SM-API-SecretHub/payment-api/api_key
+data/demo-apps/payment-api/api_key
 ```
