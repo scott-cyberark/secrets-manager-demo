@@ -14,12 +14,24 @@ Note: the SDK's `conjur_api.Client` is async by default. `idira_client.py`
 passes `async_mode=False` so `get_secret()` can stay a plain synchronous
 call, matching the other language samples in this repo.
 
-Requires Python 3.10.1+ (the `conjur-api` package's minimum supported version).
+Requires Python 3.10.1+ (the `conjur-api` package's minimum supported
+version). If your default interpreter is older, `pip install` will pick an
+older, unconstrained `conjur-api` release and then fail trying to build its
+`cryptography` dependency from source. A `.python-version` file pins this
+directory to 3.12.9 via [pyenv](https://github.com/pyenv/pyenv) - install it
+once with `pyenv install 3.12.9` if you don't already have it.
+
+## Setup
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
 ## Run the "before" version
 
 ```bash
-pip install -r requirements.txt
 python hardcoded_app.py
 ```
 
@@ -28,12 +40,11 @@ python hardcoded_app.py
 Set the connection details for your Idira Secrets Manager instance:
 
 ```bash
-export IDIRA_URL="https://idira.example.com"
-export IDIRA_ACCOUNT="myorg"
-export IDIRA_LOGIN="host/app-db-connector"
+export IDIRA_URL="https://mytenant.secretsmgr.cyberark.cloud/api"  # note the /api suffix
+export IDIRA_ACCOUNT="conjur"
+export IDIRA_LOGIN="host/data/app-db-connector"  # host/ + full path of the workload
 export IDIRA_API_KEY="<api key for the above login>"
 
-pip install -r requirements.txt
 python vault_app.py
 ```
 

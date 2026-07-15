@@ -4,7 +4,7 @@
 // The third-party API key is hardcoded directly in source. Compare with
 // vault-app.js.
 
-const PAYMENT_API_KEY = "REPLACE_WITH_YOUR_PAYMENT_PROVIDER_API_KEY"; // <-- hardcoded, bad
+const PAYMENT_API_KEY = "sk_demo_9f3kL2mQ8xNvB4tR7wYz"; // <-- hardcoded, bad
 
 async function chargeCustomer(amountCents, customerId) {
   console.log(

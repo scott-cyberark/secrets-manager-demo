@@ -4,8 +4,8 @@
 # vault-app.sh.
 set -euo pipefail
 
-AWS_ACCESS_KEY_ID="REPLACE_WITH_YOUR_AWS_ACCESS_KEY_ID"         # <-- hardcoded, bad
-AWS_SECRET_ACCESS_KEY="REPLACE_WITH_YOUR_AWS_SECRET_ACCESS_KEY" # <-- hardcoded, bad
+AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"                            # <-- hardcoded, bad
+AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"    # <-- hardcoded, bad
 
 echo "Listing S3 buckets using AWS credentials..."
 echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
