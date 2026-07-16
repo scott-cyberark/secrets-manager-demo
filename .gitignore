@@ -6,3 +6,6 @@ node_modules/
 __pycache__/
 *.pyc
 .venv/
+# generated SPIRE artifacts
+spiffe/jwks.json
+spiffe/public-keys.json

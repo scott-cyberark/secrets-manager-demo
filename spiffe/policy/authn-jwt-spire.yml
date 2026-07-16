@@ -1,0 +1,35 @@
+# JWT authenticator for SPIRE-issued JWT-SVIDs.
+# Load into branch: conjur/authn-jwt
+#   conjur policy load -b conjur/authn-jwt -f policy/authn-jwt-spire.yml
+- !policy
+  id: spire
+  body:
+    - !webservice
+
+    # Static JWKS (SPIRE's JWT-SVID signing keys) - used instead of
+    # jwks-uri because the SaaS tenant can't reach a laptop-hosted SPIRE.
+    - !variable public-keys
+
+    # Which claim identifies the workload, and where its identity lives
+    - !variable token-app-property   # -> "sub"
+    - !variable identity-path        # -> "data/spiffe-apps"
+    - !variable issuer               # -> "https://spire.demo.ingen.lab"
+    - !variable audience             # -> "conjur"
+
+    # Group for workloads allowed to use this authenticator
+    - !group apps
+
+    - !permit
+      role: !group apps
+      privilege: [read, authenticate]
+      resource: !webservice
+
+    # Status endpoint + operators group for health checks
+    - !webservice status
+
+    - !group operators
+
+    - !permit
+      role: !group operators
+      privilege: [read, update]
+      resource: !webservice status

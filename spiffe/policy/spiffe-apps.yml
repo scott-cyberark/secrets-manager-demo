@@ -1,0 +1,17 @@
+# SPIFFE workload identities. The host id IS the SPIFFE ID; the JWT
+# authenticator maps the token's 'sub' claim to identity-path + sub.
+# Load into branch: data
+#   conjur policy load -b data -f policy/spiffe-apps.yml
+- !policy
+  id: spiffe-apps
+  body:
+    - !group
+
+    - !host
+      id: spiffe://demo.ingen.lab/report-service
+      annotations:
+        authn-jwt/spire/sub: spiffe://demo.ingen.lab/report-service
+
+    - !grant
+      role: !group
+      member: !host spiffe://demo.ingen.lab/report-service

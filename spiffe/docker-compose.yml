@@ -1,0 +1,54 @@
+services:
+  spire-server:
+    image: ghcr.io/spiffe/spire-server:1.10.0
+    container_name: spire-server
+    # root so the container can initialize the named data volume (demo-only)
+    user: "0:0"
+    command: ["-config", "/opt/spire/conf/server/server.conf"]
+    volumes:
+      - ./conf/server.conf:/opt/spire/conf/server/server.conf:ro
+      - spire-server-data:/opt/spire/data/server
+
+  spire-agent:
+    image: ghcr.io/spiffe/spire-agent:1.10.0
+    container_name: spire-agent
+    # root so the Unix workload attestor can inspect peer processes (demo-only)
+    user: "0:0"
+    depends_on:
+      - spire-server
+    # JOIN_TOKEN is generated against the server by run-demo.sh and
+    # passed through the environment at 'up' time.
+    command:
+      [
+        "-config", "/opt/spire/conf/agent/agent.conf",
+        "-joinToken", "${JOIN_TOKEN:-unset-run-run-demo.sh}",
+      ]
+    volumes:
+      - ./conf/agent.conf:/opt/spire/conf/agent/agent.conf:ro
+      - spire-agent-data:/opt/spire/data/agent
+      - spire-agent-socket:/tmp/spire-agent/public
+
+  # The demo workload. Runs as UID 1001 (matched by the SPIRE registration
+  # entry's unix:uid:1001 selector), shares the agent's PID namespace so the
+  # Unix workload attestor can inspect the calling process, and holds NO
+  # credentials of any kind - identity comes entirely from attestation.
+  workload:
+    build: ./workload
+    container_name: spiffe-workload
+    profiles: ["workload"]
+    depends_on:
+      - spire-agent
+    pid: "service:spire-agent"
+    environment:
+      IDIRA_URL: https://ingen.secretsmgr.cyberark.cloud/api
+      IDIRA_ACCOUNT: conjur
+      AUTHN_ID: spire
+      SPIFFE_AUD: conjur
+      SECRET_ID: data/demo-apps/app-db/password
+    volumes:
+      - spire-agent-socket:/tmp/spire-agent/public:ro
+
+volumes:
+  spire-server-data:
+  spire-agent-data:
+  spire-agent-socket:

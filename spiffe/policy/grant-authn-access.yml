@@ -1,0 +1,6 @@
+# Allow the SPIFFE workloads group to use the spire authenticator.
+# Load into branch: conjur/authn-jwt/spire
+#   conjur policy load -b conjur/authn-jwt/spire -f policy/grant-authn-access.yml
+- !grant
+  role: !group apps
+  member: !group /data/spiffe-apps

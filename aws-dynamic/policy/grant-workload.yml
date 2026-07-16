@@ -1,0 +1,7 @@
+# Let the existing cloud-cli workload fetch the dynamic secret.
+# Load into branch: data/dynamic
+#   conjur policy load -b data/dynamic -f policy/grant-workload.yml
+- !permit
+  role: !host /data/cloud-cli
+  privileges: [read, execute]
+  resources: !variable demo-s3-reader
